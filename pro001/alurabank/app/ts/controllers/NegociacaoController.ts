@@ -8,10 +8,10 @@ export class NegociacaoController {
     @domInject('#data')
     private _inputData: JQuery;
 
-    @domInject('#data')
+    @domInject('#quantidade')
     private _inputQuantidade: JQuery;
 
-    @domInject('#data')
+    @domInject('#valor')
     private _inputValor: JQuery;
 
     private _negociacoes = new Negociacoes();

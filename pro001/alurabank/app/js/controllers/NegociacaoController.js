@@ -48,10 +48,10 @@ System.register(["../views/index", "../models/index", "../helpers/decorators/ind
                 index_3.domInject('#data')
             ], NegociacaoController.prototype, "_inputData", void 0);
             __decorate([
-                index_3.domInject('#data')
+                index_3.domInject('#quantidade')
             ], NegociacaoController.prototype, "_inputQuantidade", void 0);
             __decorate([
-                index_3.domInject('#data')
+                index_3.domInject('#valor')
             ], NegociacaoController.prototype, "_inputValor", void 0);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaDaSemana) {
