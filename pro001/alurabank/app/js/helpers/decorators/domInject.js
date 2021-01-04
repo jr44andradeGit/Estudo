@@ -1,12 +1,13 @@
 System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    function domInject(seletor) {
+    function domInject(seletor, logaSeletor = false) {
         return function (target, key) {
             let elemento;
             const getter = function () {
                 if (!elemento) {
-                    console.log(`buscando ${seletor} para injetar em ${key} - target = ${target}`);
+                    if (logaSeletor)
+                        console.log(`buscando ${seletor} para injetar em ${key} - target = ${target}`);
                     elemento = $(seletor);
                 }
                 return elemento;
