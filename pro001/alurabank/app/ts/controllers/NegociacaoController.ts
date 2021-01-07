@@ -1,7 +1,10 @@
 import { NegociacoesView, MensagemView } from "../views/index";
 import { Negociacoes, Negociacao } from '../models/index';
 //import { logarTempoDeExecucao } from '../helpers/decorators/index';
-import { domInject, logarTempoDeExecucao } from '../helpers/decorators/index';
+import { domInject, logarTempoDeExecucao, throttle } from '../helpers/decorators/index';
+import { NegociacaoParcial } from '../models/index'
+
+let timer = 0;
 
 export class NegociacaoController {
 
@@ -27,6 +30,7 @@ export class NegociacaoController {
     }
 
     //@logarTempoDeExecucao()
+    @throttle()
     adiciona(event: Event) {
 
         event.preventDefault();
@@ -53,29 +57,35 @@ export class NegociacaoController {
         return data.getDay() != DiaDaSemana.Sabado && data.getDay() != DiaDaSemana.Domingo;
     }
 
-    importaDados(){
+    @throttle()
+    importaDados() {
 
         function isOK(res: Response) {
 
-            if(res.ok) {
+            if (res.ok) {
                 return res;
             } else {
                 throw new Error(res.statusText);
             }
         }
 
-        fetch('http://localhost:8080/dados')
-            .then(res => isOK(res))
-            .then(res => res.json())
-            .then((dados: any[]) => {
-                dados
-                    .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
-                this._mensagemView.update('Negociação importada com sucesso!');
-            })
-            .catch(err => console.log(err.message));       
-    }
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+
+            fetch('http://localhost:8080/dados')
+                .then(res => isOK(res))
+                .then(res => res.json())
+                .then((dados: NegociacaoParcial[]) => {
+                    dados
+                        .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+                        .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                    this._negociacoesView.update(this._negociacoes);
+                    this._mensagemView.update('Negociação importada com sucesso!');
+                })
+                .catch(err => console.log(err.message));
+
+        }, 500);
+   }
 }
 
 enum DiaDaSemana {
