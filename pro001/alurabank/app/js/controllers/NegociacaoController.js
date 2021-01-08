@@ -30,7 +30,6 @@ System.register(["../views/index", "../models/index", "../helpers/decorators/ind
                     this._negociacoesView.update(this._negociacoes);
                 }
                 adiciona(event) {
-                    event.preventDefault();
                     let data = new Date(this._inputData.val().replace(/-/g, ','));
                     if (!this._ehDiautil(data)) {
                         this._mensagemView.update('Negociação não permitida nos finais de semana!');

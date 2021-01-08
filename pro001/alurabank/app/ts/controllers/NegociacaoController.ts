@@ -33,7 +33,7 @@ export class NegociacaoController {
     @throttle()
     adiciona(event: Event) {
 
-        event.preventDefault();
+        //event.preventDefault();
 
         let data = new Date(this._inputData.val().replace(/-/g, ','));
 
