@@ -63,7 +63,8 @@ export class NegociacaoController {
     @throttle()
     importaDados() {
 
-        /*         function isOK(res: Response) {
+        /*         
+        function isOK(res: Response) {
         
                     if (res.ok) {
                         return res;
@@ -78,14 +79,16 @@ export class NegociacaoController {
             throw new Error(res.statusText);
         }
 
-        this._service.obterNegociacoes(isOK)
+        this._service.obterNegociacoes(isOk)
             .then(negociacoes => {
                 negociacoes.forEach((negociacao: Negociacao) =>
                     this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
+                    this._negociacoesView.update(this._negociacoes);
+                    this._mensagemView.update('Negociação importada com sucesso!');
             });
 
-        /*         fetch('http://localhost:8080/dados')
+        /*         
+        fetch('http://localhost:8080/dados')
                         .then(res => isOK(res))
                         .then(res => res.json())
                         .then((dados: NegociacaoParcial[]) => {
@@ -97,7 +100,6 @@ export class NegociacaoController {
                         })
                         .catch(err => console.log(err.message));
          */
-
     }
 }
 
