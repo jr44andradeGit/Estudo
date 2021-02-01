@@ -4,6 +4,7 @@ import { Negociacoes, Negociacao } from '../models/index';
 import { domInject, logarTempoDeExecucao, throttle } from '../helpers/decorators/index';
 import { NegociacaoParcial } from '../models/index'
 import { NegociacaoService, HandlerFunction } from '../services/index';
+import { imprime } from '../helpers/index';
 
 let timer = 0;
 
@@ -50,7 +51,14 @@ export class NegociacaoController {
             parseInt(this._inputQuantidade.val()),
             parseFloat(this._inputValor.val()));
 
+       //negociacao.paraTexto();
+
         this._negociacoes.adiciona(negociacao);
+
+        imprime(negociacao, this._negociacoes);
+
+        //this._negociacoes.paraTexto();
+
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.update('Negociação adicionada com sucesso!');
     }
@@ -75,7 +83,7 @@ export class NegociacaoController {
          */
 
         const isOk: HandlerFunction = (res: Response) => {
-            if(res.ok) return res;
+            if (res.ok) return res;
             throw new Error(res.statusText);
         }
 
@@ -83,8 +91,8 @@ export class NegociacaoController {
             .then(negociacoes => {
                 negociacoes.forEach((negociacao: Negociacao) =>
                     this._negociacoes.adiciona(negociacao));
-                    this._negociacoesView.update(this._negociacoes);
-                    this._mensagemView.update('Negociação importada com sucesso!');
+                this._negociacoesView.update(this._negociacoes);
+                this._mensagemView.update('Negociação importada com sucesso!');
             });
 
         /*         
